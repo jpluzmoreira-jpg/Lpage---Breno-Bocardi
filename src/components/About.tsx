@@ -9,9 +9,25 @@ export function About() {
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="w-full md:w-1/2"
+          className="w-full md:w-1/2 flex flex-col items-center"
         >
           <BrenoImage />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-8"
+          >
+            <a 
+              href="https://wa.me/5547992486758?text=Olá%20Breno,%20gostaria%20de%20saber%20mais%20sobre%20os%20imóveis%20em%20Porto%20Belo%20e%20Itapema." 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-gold hover:bg-gold-hover text-dark font-semibold text-lg py-4 px-10 rounded-full transition-all hover:scale-105 shadow-[0_0_30px_rgba(205,164,52,0.2)]"
+            >
+              Consultoria do Breno
+            </a>
+          </motion.div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 30 }}
