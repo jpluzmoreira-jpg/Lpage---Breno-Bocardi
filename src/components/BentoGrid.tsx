@@ -32,7 +32,7 @@ export function BentoGrid() {
           <div className="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <Clock className="w-10 h-10 text-gold mb-6 relative z-10" />
           <h3 className="text-2xl font-display font-bold mb-3 relative z-10">10 Anos para Pagar</h3>
-          <p className="text-gray-400 relative z-10">Financiamento direto com a construtora, sem juros, com fluxo de pagamento flexível.</p>
+          <p className="text-gray-400 relative z-10">Financiamento direto com a construtora, sem juros, com fluxo de pagamento flexível, pagamento em até 132 vezes.</p>
         </motion.div>
 
         <motion.div

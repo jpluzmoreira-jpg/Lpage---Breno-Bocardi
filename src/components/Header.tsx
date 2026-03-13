@@ -15,10 +15,12 @@ export function Header() {
         <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-300">
           <a href="#diferenciais" className="hover:text-gold transition-colors">Diferenciais</a>
           <a href="#sobre" className="hover:text-gold transition-colors">Sobre</a>
-          <a href="#visoes" className="hover:text-gold transition-colors">Visões do Futuro</a>
+          <a href="#masterplan" className="hover:text-gold transition-colors">O Futuro</a>
         </nav>
         <a
-          href="#contato"
+          href="https://wa.me/5547992486758?text=Olá%20Breno,%20gostaria%20de%20saber%20mais%20sobre%20os%20imóveis%20em%20Porto%20Belo%20e%20Itapema."
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-colors border border-white/10"
         >
           Contato

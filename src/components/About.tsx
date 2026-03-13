@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { BrenoImage } from './BrenoImage';
 
 export function About() {
   return (
@@ -10,12 +11,7 @@ export function About() {
           viewport={{ once: true }}
           className="w-full md:w-1/2"
         >
-          <img
-            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop"
-            alt="Breno Bocardi"
-            className="rounded-3xl object-cover aspect-[4/5] w-full max-w-md mx-auto grayscale hover:grayscale-0 transition-all duration-700 border border-white/10"
-            referrerPolicy="no-referrer"
-          />
+          <BrenoImage />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 30 }}
@@ -26,7 +22,7 @@ export function About() {
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Breno Bocardi</h2>
           <p className="text-gold font-semibold tracking-widest uppercase text-sm mb-8">Engenheiro & Especialista Imobiliário</p>
           <div className="space-y-6 text-gray-300 text-lg font-light">
-            <p>Com 15 anos de atuação no mercado imobiliário e formação em Engenharia, ofereço uma consultoria técnica e analítica para seus investimentos.</p>
+            <p>Formado em Engenharia, ofereço uma consultoria técnica e analítica para seus investimentos.</p>
             <p>Faço parte d'O Novo Imobiliário, a terceira maior imobiliária do Brasil, garantindo acesso a condições exclusivas de preço e pagamento que você não encontra em outro lugar.</p>
             <p>Meu objetivo é trazer clareza e suporte em cada etapa do processo, garantindo que seu patrimônio cresça com segurança e alta rentabilidade.</p>
           </div>

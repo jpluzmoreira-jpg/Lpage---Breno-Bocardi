@@ -9,8 +9,8 @@ import { Stats } from './components/Stats';
 import { BentoGrid } from './components/BentoGrid';
 import { About } from './components/About';
 import { Testimonials } from './components/Testimonials';
-import { ImageGenerator } from './components/ImageGenerator';
-import { Chatbot } from './components/Chatbot';
+import { Masterplan } from './components/Masterplan';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -26,11 +26,11 @@ export default function App() {
         <About />
       </div>
       <Testimonials />
-      <div id="visoes">
-        <ImageGenerator />
+      <div id="masterplan">
+        <Masterplan />
       </div>
       <Footer />
-      <Chatbot />
+      <WhatsAppButton />
     </div>
   );
 }
