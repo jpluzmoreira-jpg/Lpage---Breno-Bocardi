@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Map, Anchor, TreePine, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -10,6 +10,14 @@ const videoIds = [
 
 export function Masterplan() {
   const [currentVideo, setCurrentVideo] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const nextVideo = () => {
     setCurrentVideo((prev) => (prev + 1) % videoIds.length);
@@ -67,7 +75,12 @@ export function Masterplan() {
             </div>
 
             <div className="bg-card p-6 rounded-2xl border border-gold/20 mb-8 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <motion.div 
+                initial={isMobile ? { opacity: 0 } : {}}
+                whileInView={isMobile ? { opacity: 1 } : {}}
+                transition={{ delay: 1, duration: 1 }}
+                className={`absolute inset-0 bg-gradient-to-r from-gold/5 to-transparent transition-opacity ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
+              ></motion.div>
               <h4 className="text-gold font-bold mb-2 relative z-10">A Janela de Oportunidade</h4>
               <p className="text-sm text-gray-300 relative z-10">
                 Investir agora significa entrar <strong>antes</strong> da conclusão destas grandes obras. A valorização imobiliária projetada para os próximos anos, impulsionada pelo Masterplan, criará um cenário de altíssima rentabilidade para os investidores pioneiros.
@@ -88,9 +101,9 @@ export function Masterplan() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="w-full lg:w-1/2 relative"
+            className="w-full lg:w-1/2 relative flex justify-center"
           >
-            <div className="relative rounded-3xl overflow-hidden aspect-[9/16] md:aspect-[4/3] lg:aspect-[9/16] border border-white/10 bg-black">
+            <div className="relative rounded-3xl overflow-hidden aspect-[9/16] w-full max-w-[320px] md:max-w-none md:aspect-[4/3] lg:aspect-[9/16] lg:max-w-[400px] border border-white/10 bg-black shadow-2xl">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentVideo}
