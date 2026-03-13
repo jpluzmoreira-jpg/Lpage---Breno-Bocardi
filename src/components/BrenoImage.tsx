@@ -4,7 +4,7 @@ import { Loader2, Wand2 } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export function BrenoImage() {
-  const [imageUrl, setImageUrl] = useState<string | null>(localStorage.getItem('breno_edited_image') || '/original_breno.jpg');
+  const [imageUrl, setImageUrl] = useState<string | null>(localStorage.getItem('breno_edited_image') || './original_breno.jpg');
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +21,7 @@ export function BrenoImage() {
       }
 
       // Fetch the original image
-      const res = await fetch('/original_breno.jpg');
+      const res = await fetch('./original_breno.jpg');
       const blob = await res.blob();
       
       const reader = new FileReader();
@@ -71,8 +71,7 @@ export function BrenoImage() {
     }
   };
 
-  const isOriginal = imageUrl === '/original_breno.jpg';
-
+  const isOriginal = imageUrl === './original_breno.jpg';
   return (
     <div className="relative w-full max-w-md mx-auto group">
       <a 
