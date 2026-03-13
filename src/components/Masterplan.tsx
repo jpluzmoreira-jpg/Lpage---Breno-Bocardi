@@ -2,21 +2,21 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Map, Anchor, TreePine, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const videos = [
-  "https://drive.google.com/uc?export=download&id=1G7ish7AKz3Xl6A9KPYRHHuJZf9KTe3Sr",
-  "https://drive.google.com/uc?export=download&id=1sCcHYPAJykTVFbNjAFJpoNzrMpRS4pb4",
-  "https://drive.google.com/uc?export=download&id=1k3f7n6LaUNqM9hf9io--ZVQ6P-uI5XH3"
+const videoIds = [
+  "1G7ish7AKz3Xl6A9KPYRHHuJZf9KTe3Sr",
+  "1sCcHYPAJykTVFbNjAFJpoNzrMpRS4pb4",
+  "1k3f7n6LaUNqM9hf9io--ZVQ6P-uI5XH3"
 ];
 
 export function Masterplan() {
   const [currentVideo, setCurrentVideo] = useState(0);
 
   const nextVideo = () => {
-    setCurrentVideo((prev) => (prev + 1) % videos.length);
+    setCurrentVideo((prev) => (prev + 1) % videoIds.length);
   };
 
   const prevVideo = () => {
-    setCurrentVideo((prev) => (prev - 1 + videos.length) % videos.length);
+    setCurrentVideo((prev) => (prev - 1 + videoIds.length) % videoIds.length);
   };
 
   return (
@@ -100,13 +100,10 @@ export function Masterplan() {
                   transition={{ duration: 0.5 }}
                   className="absolute inset-0"
                 >
-                  <video 
-                    src={videos[currentVideo]} 
-                    className="w-full h-full object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                  <iframe 
+                    src={`https://drive.google.com/file/d/${videoIds[currentVideo]}/preview`}
+                    className="w-full h-full border-0"
+                    allow="autoplay; fullscreen"
                   />
                 </motion.div>
               </AnimatePresence>
@@ -131,12 +128,12 @@ export function Masterplan() {
                 </button>
               </div>
 
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                {videos.map((_, idx) => (
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 pointer-events-none">
+                {videoIds.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentVideo(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                    className={`w-2.5 h-2.5 rounded-full transition-colors pointer-events-auto ${
                       currentVideo === idx ? 'bg-gold' : 'bg-white/30 hover:bg-white/50'
                     }`}
                     aria-label={`Ir para o vídeo ${idx + 1}`}
