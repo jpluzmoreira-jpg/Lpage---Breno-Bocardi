@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
+import { brokerData } from '../config/brokerData';
 
 export function WhatsAppButton() {
-  const phoneNumber = "5547992486758";
-  const message = "Olá Breno, gostaria de saber mais sobre os imóveis em Porto Belo e Itapema.";
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const { broker } = brokerData;
+  const whatsappUrl = `https://wa.me/${broker.phone}?text=${encodeURIComponent(broker.whatsappMessage)}`;
 
   return (
     <motion.a

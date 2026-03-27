@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Map, Anchor, TreePine, ChevronLeft, ChevronRight } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
+import { brokerData } from '../config/brokerData';
 
-const videoIds = [
-  "1G7ish7AKz3Xl6A9KPYRHHuJZf9KTe3Sr",
-  "1sCcHYPAJykTVFbNjAFJpoNzrMpRS4pb4",
-  "1k3f7n6LaUNqM9hf9io--ZVQ6P-uI5XH3"
-];
+// Helper to dynamically render Lucide icons
+const IconComponent = ({ name, className }: { name: string, className?: string }) => {
+  const Icon = (LucideIcons as any)[name];
+  if (!Icon) return <LucideIcons.CheckCircle className={className} />;
+  return <Icon className={className} />;
+};
 
 export function Masterplan() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const { region } = brokerData;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -20,11 +23,11 @@ export function Masterplan() {
   }, []);
 
   const nextVideo = () => {
-    setCurrentVideo((prev) => (prev + 1) % videoIds.length);
+    setCurrentVideo((prev) => (prev + 1) % region.videoIds.length);
   };
 
   const prevVideo = () => {
-    setCurrentVideo((prev) => (prev - 1 + videoIds.length) % videoIds.length);
+    setCurrentVideo((prev) => (prev - 1 + region.videoIds.length) % region.videoIds.length);
   };
 
   return (
@@ -38,40 +41,24 @@ export function Masterplan() {
             className="w-full lg:w-1/2"
           >
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              Transformações Arquitetônicas e o <span className="text-gold">Futuro</span>
+              {region.title} <span className="text-gold">{region.highlight}</span>
             </h2>
             <p className="text-gray-400 text-lg mb-6">
-              A cidade está prestes a passar por uma das maiores transformações urbanísticas do Brasil. O <strong>Masterplan do Perequê</strong> trará um novo padrão de vida e infraestrutura, elevando o patamar da região e redefinindo o luxo no litoral catarinense.
+              {region.description}
             </p>
             
             <div className="space-y-6 mb-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                  <Anchor className="text-gold w-6 h-6" />
+              {region.features.map((feature, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
+                    <IconComponent name={feature.icon} className="text-gold w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">{feature.title}</h4>
+                    <p className="text-gray-400 text-sm">{feature.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-1">Novo Píer Turístico</h4>
-                  <p className="text-gray-400 text-sm">Estrutura de classe mundial para receber embarcações, integrando lazer e fomentando o turismo de alto padrão.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                  <Map className="text-gold w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-1">Revitalização da Orla</h4>
-                  <p className="text-gray-400 text-sm">Alargamento da faixa de areia e um novo calçadão moderno, valorizando exponencialmente os imóveis frente-mar.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center shrink-0">
-                  <TreePine className="text-gold w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-xl font-bold mb-1">Parques e Mobilidade</h4>
-                  <p className="text-gray-400 text-sm">Criação de novas áreas verdes, ciclovias e vias planejadas para garantir sustentabilidade e qualidade de vida.</p>
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="bg-card p-6 rounded-2xl border border-gold/20 mb-8 relative overflow-hidden group">
@@ -81,20 +68,22 @@ export function Masterplan() {
                 transition={{ delay: 1, duration: 1 }}
                 className={`absolute inset-0 bg-gradient-to-r from-gold/5 to-transparent transition-opacity ${!isMobile ? 'opacity-0 group-hover:opacity-100' : ''}`}
               ></motion.div>
-              <h4 className="text-gold font-bold mb-2 relative z-10">A Janela de Oportunidade</h4>
+              <h4 className="text-gold font-bold mb-2 relative z-10">{region.opportunityBox.title}</h4>
               <p className="text-sm text-gray-300 relative z-10">
-                Investir agora significa entrar <strong>antes</strong> da conclusão destas grandes obras. A valorização imobiliária projetada para os próximos anos, impulsionada pelo Masterplan, criará um cenário de altíssima rentabilidade para os investidores pioneiros.
+                {region.opportunityBox.description}
               </p>
             </div>
 
-            <a 
-              href="https://drive.google.com/file/d/1tOc8_vH3sS6NEFSdVCdTtiVsxmMCMsuG/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-gold hover:text-white transition-colors font-semibold"
-            >
-              Conheça o Masterplan Completo <ArrowRight className="w-5 h-5" />
-            </a>
+            {region.masterplanLink && (
+              <a 
+                href={region.masterplanLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-gold hover:text-white transition-colors font-semibold"
+              >
+                Conheça o Masterplan Completo <LucideIcons.ArrowRight className="w-5 h-5" />
+              </a>
+            )}
           </motion.div>
 
           <motion.div 
@@ -114,7 +103,7 @@ export function Masterplan() {
                   className="absolute inset-0"
                 >
                   <iframe 
-                    src={`https://drive.google.com/file/d/${videoIds[currentVideo]}/preview`}
+                    src={`https://drive.google.com/file/d/${region.videoIds[currentVideo]}/preview`}
                     className="w-full h-full border-0"
                     allow="autoplay; fullscreen"
                   />
@@ -127,7 +116,7 @@ export function Masterplan() {
                   className="bg-black/50 hover:bg-black/80 text-white p-2 rounded-r-xl backdrop-blur-sm transition-colors"
                   aria-label="Vídeo anterior"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <LucideIcons.ChevronLeft className="w-6 h-6" />
                 </button>
               </div>
               
@@ -137,12 +126,12 @@ export function Masterplan() {
                   className="bg-black/50 hover:bg-black/80 text-white p-2 rounded-l-xl backdrop-blur-sm transition-colors"
                   aria-label="Próximo vídeo"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <LucideIcons.ChevronRight className="w-6 h-6" />
                 </button>
               </div>
 
               <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 pointer-events-none">
-                {videoIds.map((_, idx) => (
+                {region.videoIds.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentVideo(idx)}

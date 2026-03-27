@@ -1,7 +1,16 @@
 import { motion } from 'motion/react';
-import { BrenoImage } from './BrenoImage';
+import { BrokerImage } from './BrokerImage';
+import { brokerData } from '../config/brokerData';
 
 export function About() {
+  const { broker } = brokerData;
+
+  const handleWhatsAppClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const message = encodeURIComponent(broker.whatsappMessage);
+    window.open(`https://wa.me/${broker.phone}?text=${message}`, '_blank');
+  };
+
   return (
     <section className="py-24 px-4 bg-darker border-y border-white/5">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
@@ -11,7 +20,7 @@ export function About() {
           viewport={{ once: true }}
           className="w-full md:w-1/2 flex flex-col items-center"
         >
-          <BrenoImage />
+          <BrokerImage />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -20,12 +29,11 @@ export function About() {
             className="mt-8"
           >
             <a 
-              href="https://wa.me/5547992486758?text=Olá%20Breno,%20gostaria%20de%20saber%20mais%20sobre%20os%20imóveis%20em%20Porto%20Belo%20e%20Itapema." 
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`https://wa.me/${broker.phone}`}
+              onClick={handleWhatsAppClick}
               className="inline-block bg-gold hover:bg-gold-hover text-dark font-semibold text-lg py-4 px-10 rounded-full transition-all hover:scale-105 shadow-[0_0_30px_rgba(205,164,52,0.2)]"
             >
-              Consultoria do Breno
+              Consultoria do {broker.name.split(' ')[0]}
             </a>
           </motion.div>
         </motion.div>
@@ -35,26 +43,24 @@ export function About() {
           viewport={{ once: true }}
           className="w-full md:w-1/2"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">Breno Bocardi</h2>
-          <p className="text-gold font-semibold tracking-widest uppercase text-sm mb-8">Engenheiro & Especialista Imobiliário</p>
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">{broker.name}</h2>
+          <p className="text-gold font-semibold tracking-widest uppercase text-sm mb-8">{broker.bio.title}</p>
           <div className="space-y-6 text-gray-300 text-lg font-light">
-            <p>Formado em Engenharia, ofereço uma consultoria técnica e analítica para seus investimentos.</p>
-            <p>Faço parte d'O Novo Imobiliário, a terceira maior imobiliária do Brasil, garantindo acesso a condições exclusivas de preço e pagamento que você não encontra em outro lugar.</p>
-            <p>Meu objetivo é trazer clareza e suporte em cada etapa do processo, garantindo que seu patrimônio cresça com segurança e alta rentabilidade.</p>
+            {broker.bio.paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </div>
           <div className="mt-10 flex gap-8 items-center border-t border-white/10 pt-8">
             <div className="text-sm text-gray-400">
               <p className="font-semibold text-white">CRECI</p>
-              <p>73645</p>
+              <p>{broker.creci}</p>
             </div>
-            <div className="text-sm text-gray-400">
-              <p className="font-semibold text-white">Empresa</p>
-              <p>O Novo Imobiliário</p>
-            </div>
-            <div className="text-sm text-gray-400">
-              <p className="font-semibold text-white">Avaliações</p>
-              <p>4.862 no Google</p>
-            </div>
+            {brokerData.company.show && (
+              <div className="text-sm text-gray-400">
+                <p className="font-semibold text-white">Empresa</p>
+                <p>{brokerData.company.name}</p>
+              </div>
+            )}
           </div>
         </motion.div>
       </div>

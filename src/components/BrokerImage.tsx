@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
+import { brokerData } from '../config/brokerData';
 
-export function BrenoImage() {
+export function BrokerImage() {
   const [isMobile, setIsMobile] = useState(false);
+  const { broker } = brokerData;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -14,7 +16,7 @@ export function BrenoImage() {
   return (
     <div className="relative w-full max-w-md mx-auto group">
       <a 
-        href="https://www.instagram.com/brenobocardi.imoveis/" 
+        href={broker.instagram} 
         target="_blank" 
         rel="noopener noreferrer"
         className="block"
@@ -24,8 +26,8 @@ export function BrenoImage() {
           whileInView={isMobile ? { filter: 'grayscale(0)' } : {}}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ delay: 1, duration: 1 }}
-          src="https://lh3.googleusercontent.com/d/1ruzvtvKqT8adG9bKaGGGtqvPGVrQ3_GE"
-          alt="Breno Bocardi"
+          src={broker.profileImage}
+          alt={broker.name}
           referrerPolicy="no-referrer"
           className={`rounded-3xl object-cover aspect-[4/5] w-full transition-all duration-700 border border-white/10 ${!isMobile ? 'grayscale group-hover:grayscale-0' : ''}`}
         />
